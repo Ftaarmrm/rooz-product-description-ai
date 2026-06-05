@@ -1,1 +1,11 @@
-
+.env
+.git
+.gitignore
+__pycache__/
+*.pyc
+.pytest_cache/
+tests/
+README.md
+COOLIFY_DEPLOY_AR.md
+RAPIDAPI_SELLING_GUIDE_AR.md
+PROJECT_GUIDE_AR.md
