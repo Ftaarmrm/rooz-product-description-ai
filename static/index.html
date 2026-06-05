@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rooz Product Description AI</title>
+  <meta name="description" content="AI-powered product description API for e-commerce. Generate professional descriptions in 5 languages via RapidAPI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080c10;
+      --surface: #0e1318;
+      --surface2: #141b23;
+      --border: #1e2a35;
+      --accent: #00d4ff;
+      --accent2: #7b61ff;
+      --accent3: #00ff9d;
+      --text: #e8eef4;
+      --muted: #6b8090;
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── GRID BACKGROUND ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── GLOW ORBS ── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb-1 { width: 500px; height: 500px; background: var(--accent); top: -100px; left: -100px; }
+    .orb-2 { width: 400px; height: 400px; background: var(--accent2); bottom: 10%; right: -80px; }
+    .orb-3 { width: 300px; height: 300px; background: var(--accent3); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8, 12, 16, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    .badge {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      background: rgba(0, 212, 255, 0.1);
+      color: var(--accent);
+      border: 1px solid rgba(0, 212, 255, 0.25);
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 7rem 0 5rem;
+      text-align: center;
+    }
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(0, 212, 255, 0.06);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-label::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    h1 .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 580px;
+      margin: 0 auto 2.5rem;
+      font-weight: 300;
+      line-height: 1.7;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.8rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+    }
+    .btn-primary:hover { background: #33ddff; transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent);
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+    }
+
+    /* ── SECTION ── */
+    section { padding: 5rem 0; }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .section-sub {
+      color: var(--muted);
+      margin-bottom: 3rem;
+      font-size: 0.95rem;
+    }
+
+    /* ── LANGS GRID ── */
+    .langs-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 700px) { .langs-grid { grid-template-columns: repeat(3, 1fr); } }
+    .lang-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .lang-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .lang-flag { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+    .lang-name {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    .lang-code {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      background: rgba(0, 212, 255, 0.08);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    /* ── PLATFORMS ── */
+    .platforms-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .platform-tag {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: var(--surface);
+      transition: all 0.2s;
+    }
+    .platform-tag:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    /* ── FEATURES ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    @media (max-width: 700px) { .features-grid { grid-template-columns: 1fr; } }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      transition: border-color 0.2s;
+    }
+    .feature-card:hover { border-color: var(--border); }
+    .feature-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .feature-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .feature-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── CODE BLOCK ── */
+    .code-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .code-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1.25rem;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+    }
+    .code-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .code-dot.red { background: #ff5f57; }
+    .code-dot.yellow { background: #febc2e; }
+    .code-dot.green { background: #28c840; }
+    .code-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-left: auto;
+    }
+    .code-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+    }
+    .code-tab {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.6rem 1.25rem;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .code-tab.active { color: var(--accent); border-bottom-color: var(--accent); background: transparent; }
+    pre {
+      padding: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      line-height: 1.7;
+      overflow-x: auto;
+      display: none;
+    }
+    pre.active { display: block; }
+    .t-key { color: #7b61ff; }
+    .t-str { color: #00d4ff; }
+    .t-num { color: #00ff9d; }
+    .t-comment { color: #4a6070; }
+    .t-punct { color: #6b8090; }
+
+    /* ── PRICING ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 900px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 500px) { .pricing-grid { grid-template-columns: 1fr; } }
+    .price-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .price-card.featured {
+      border-color: var(--accent);
+      background: rgba(0, 212, 255, 0.04);
+    }
+    .price-card:hover { transform: translateY(-3px); }
+    .price-plan {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .price-amount {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .price-amount span { font-size: 1rem; font-weight: 400; color: var(--muted); }
+    .price-req {
+      font-size: 0.82rem;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+      font-family: var(--font-mono);
+    }
+    .price-sep { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
+
+    /* ── ENDPOINT BADGE ── */
+    .endpoint-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      margin-bottom: 2.5rem;
+    }
+    .method-badge {
+      background: rgba(0, 255, 157, 0.12);
+      color: var(--accent3);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-weight: 500;
+      font-size: 0.72rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+      text-align: center;
+    }
+    .footer-text {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+    }
+    .footer-text strong { color: var(--text); }
+
+    /* ── DIVIDER ── */
+    .divider { border: none; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a class="logo" href="/">Rooz<span> AI</span></a>
+      <span class="badge">v1.0.0 · Available on RapidAPI</span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-label">AI-Powered · 5 Languages · E-commerce Ready</div>
+    <h1>Product Description<br><span class="highlight">AI API</span></h1>
+    <p class="hero-desc">
+      Generate professional product descriptions, bullet points, SEO titles,
+      and meta descriptions for your e-commerce store — in seconds.
+    </p>
+    <div class="btn-group">
+      <a class="btn btn-primary" href="https://rapidapi.com" target="_blank" rel="noopener">
+        Get API Access →
+      </a>
+      <a class="btn btn-secondary" href="/docs">
+        API Docs
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="container">
+  <div class="stats-bar">
+    <div class="stat">
+      <span class="stat-num">5</span>
+      <span class="stat-label">Languages</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">8</span>
+      <span class="stat-label">Platforms</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">4</span>
+      <span class="stat-label">Tones</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">&lt;2s</span>
+      <span class="stat-label">Avg Response</span>
+    </div>
+  </div>
+</div>
+
+<!-- LANGUAGES -->
+<section>
+  <div class="container">
+    <h2 class="section-title">5-Language Support</h2>
+    <p class="section-sub">Generate descriptions in the language your customers speak.</p>
+    <div class="langs-grid">
+      <div class="lang-card">
+        <span class="lang-flag">🇺🇸</span>
+        <span class="lang-name">English</span>
+        <span class="lang-code">en</span>
+      </div>
+      <div class="lang-card">
+        <span class="lang-flag">🇸🇦</span>
+        <span class="lang-name">Arabic</span>
+        <span class="lang-code">ar</span>
+      </div>
+      <div class="lang-card">
+        <span class="lang-flag">🇪🇸</span>
+        <span class="lang-name">Spanish</span>
+        <span class="lang-code">es</span>
+      </div>
+      <div class="lang-card">
+        <span class="lang-flag">🇮🇳</span>
+        <span class="lang-name">Hindi</span>
+        <span class="lang-code">hi</span>
+      </div>
+      <div class="lang-card">
+        <span class="lang-flag">🇫🇷</span>
+        <span class="lang-name">French</span>
+        <span class="lang-code">fr</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section>
+  <div class="container">
+    <h2 class="section-title">What You Get</h2>
+    <p class="section-sub">Every API response includes five ready-to-use content pieces.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">✦</span>
+        <div class="feature-title">Short Description</div>
+        <p class="feature-desc">A punchy marketing line for product cards and category pages.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">◈</span>
+        <div class="feature-title">Long Description</div>
+        <p class="feature-desc">Detailed, persuasive copy optimized for product detail pages.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">◆</span>
+        <div class="feature-title">Bullet Points</div>
+        <p class="feature-desc">3–5 scannable feature highlights. No invented claims.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">◉</span>
+        <div class="feature-title">SEO Title</div>
+        <p class="feature-desc">Search-optimized title under 70 characters for maximum visibility.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">◎</span>
+        <div class="feature-title">Meta Description</div>
+        <p class="feature-desc">Click-driving snippet under 160 characters for search results.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">⬡</span>
+        <div class="feature-title">Arabic Styles</div>
+        <p class="feature-desc">Formal, Saudi White, or Gulf Commercial — tailored for the region.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORMS -->
+<section>
+  <div class="container">
+    <h2 class="section-title">Platform-Aware</h2>
+    <p class="section-sub">Tell the API your platform — get copy tuned for it.</p>
+    <div class="platforms-wrap">
+      <span class="platform-tag">Shopify</span>
+      <span class="platform-tag">WooCommerce</span>
+      <span class="platform-tag">Salla</span>
+      <span class="platform-tag">Zid</span>
+      <span class="platform-tag">Amazon</span>
+      <span class="platform-tag">Noon</span>
+      <span class="platform-tag">AliExpress</span>
+      <span class="platform-tag">General</span>
+    </div>
+  </div>
+</section>
+
+<!-- ENDPOINT EXAMPLE -->
+<section>
+  <div class="container">
+    <h2 class="section-title">Simple, Predictable API</h2>
+    <p class="section-sub">One endpoint. Clean JSON in, clean JSON out.</p>
+
+    <div class="endpoint-badge">
+      <span class="method-badge">POST</span>
+      /v1/product-description/generate
+    </div>
+
+    <div class="code-section">
+      <div class="code-header">
+        <div class="code-dot red"></div>
+        <div class="code-dot yellow"></div>
+        <div class="code-dot green"></div>
+        <span class="code-label">Example · Wireless Gaming Mouse · English</span>
+      </div>
+      <div class="code-tabs">
+        <button class="code-tab active" onclick="showTab('request', this)">Request</button>
+        <button class="code-tab" onclick="showTab('response', this)">Response</button>
+      </div>
+      <pre id="tab-request" class="active"><span class="t-punct">{</span>
+  <span class="t-key">"product_name"</span><span class="t-punct">:</span> <span class="t-str">"Wireless Gaming Mouse"</span><span class="t-punct">,</span>
+  <span class="t-key">"features"</span><span class="t-punct">:</span> <span class="t-punct">[</span>
+    <span class="t-str">"RGB lighting"</span><span class="t-punct">,</span>
+    <span class="t-str">"Rechargeable battery"</span><span class="t-punct">,</span>
+    <span class="t-str">"Low latency"</span>
+  <span class="t-punct">],</span>
+  <span class="t-key">"language"</span><span class="t-punct">:</span> <span class="t-str">"en"</span><span class="t-punct">,</span>
+  <span class="t-key">"tone"</span><span class="t-punct">:</span> <span class="t-str">"persuasive"</span><span class="t-punct">,</span>
+  <span class="t-key">"platform"</span><span class="t-punct">:</span> <span class="t-str">"shopify"</span><span class="t-punct">,</span>
+  <span class="t-key">"target_audience"</span><span class="t-punct">:</span> <span class="t-str">"gamers"</span>
+<span class="t-punct">}</span></pre>
+      <pre id="tab-response"><span class="t-punct">{</span>
+  <span class="t-key">"product_name"</span><span class="t-punct">:</span> <span class="t-str">"Wireless Gaming Mouse"</span><span class="t-punct">,</span>
+  <span class="t-key">"short_description"</span><span class="t-punct">:</span> <span class="t-str">"Dominate every match with RGB precision and zero-lag wireless freedom."</span><span class="t-punct">,</span>
+  <span class="t-key">"long_description"</span><span class="t-punct">:</span> <span class="t-str">"Engineered for serious gamers who refuse to compromise..."</span><span class="t-punct">,</span>
+  <span class="t-key">"bullet_points"</span><span class="t-punct">:</span> <span class="t-punct">[</span>
+    <span class="t-str">"Vibrant RGB lighting with multiple modes"</span><span class="t-punct">,</span>
+    <span class="t-str">"Long-lasting rechargeable battery"</span><span class="t-punct">,</span>
+    <span class="t-str">"Ultra-low latency wireless connection"</span>
+  <span class="t-punct">],</span>
+  <span class="t-key">"seo_title"</span><span class="t-punct">:</span> <span class="t-str">"Wireless Gaming Mouse with RGB &amp; Rechargeable Battery"</span><span class="t-punct">,</span>
+  <span class="t-key">"meta_description"</span><span class="t-punct">:</span> <span class="t-str">"Shop the Wireless Gaming Mouse with RGB lighting, rechargeable battery, and ultra-low latency."</span><span class="t-punct">,</span>
+  <span class="t-key">"language"</span><span class="t-punct">:</span> <span class="t-str">"en"</span><span class="t-punct">,</span>
+  <span class="t-key">"tone"</span><span class="t-punct">:</span> <span class="t-str">"persuasive"</span><span class="t-punct">,</span>
+  <span class="t-key">"platform"</span><span class="t-punct">:</span> <span class="t-str">"shopify"</span>
+<span class="t-punct">}</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section>
+  <div class="container">
+    <h2 class="section-title">Pricing</h2>
+    <p class="section-sub">Available on RapidAPI — pay only for what you use.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-plan">Free</div>
+        <div class="price-amount">$0<span>/mo</span></div>
+        <div class="price-req">30 requests/month</div>
+        <hr class="price-sep">
+        <p style="font-size:0.82rem;color:var(--muted);">Perfect for testing and evaluation.</p>
+      </div>
+      <div class="price-card">
+        <div class="price-plan">Starter</div>
+        <div class="price-amount">$9<span>/mo</span></div>
+        <div class="price-req">500 requests/month</div>
+        <hr class="price-sep">
+        <p style="font-size:0.82rem;color:var(--muted);">For small stores getting started.</p>
+      </div>
+      <div class="price-card featured">
+        <div class="price-plan" style="color:var(--accent);">Pro ★</div>
+        <div class="price-amount">$19<span>/mo</span></div>
+        <div class="price-req">2,000 requests/month</div>
+        <hr class="price-sep">
+        <p style="font-size:0.82rem;color:var(--muted);">Most popular for growing stores.</p>
+      </div>
+      <div class="price-card">
+        <div class="price-plan">Business</div>
+        <div class="price-amount">$49<span>/mo</span></div>
+        <div class="price-req">7,000 requests/month</div>
+        <hr class="price-sep">
+        <p style="font-size:0.82rem;color:var(--muted);">For high-volume e-commerce.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p class="footer-text">
+      <strong>Rooz Product Description AI</strong> &nbsp;·&nbsp;
+      Proprietary — All Rights Reserved &nbsp;·&nbsp;
+      Available on RapidAPI
+    </p>
+  </div>
+</footer>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('pre').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Git
+.git/
+.gitignore
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+venv/
+
+# Tests & docs (not needed in image)
+tests/
+README.md
+COOLIFY_DEPLOY_AR.md
+RAPIDAPI_SELLING_GUIDE_AR.md
+LICENSE
