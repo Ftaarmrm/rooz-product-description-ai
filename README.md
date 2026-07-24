@@ -1,3 +1,4 @@
+
 # Rooz Product Description AI
 
 > AI-powered Product Description API for e-commerce platforms. Generate product descriptions, bullet points, SEO titles, and meta descriptions in 5 languages via a single REST endpoint.
@@ -15,6 +16,35 @@
 - **Provider fallback** — Groq is primary; if it fails and OpenRouter is configured, requests fall back automatically with no downtime
 - **Docker-ready** — single `docker compose up` to run
 - **Coolify-compatible** — deploy as a container with environment variables
+
+---
+
+## Production Base URL
+
+**Base URL:**
+```
+https://api.rooz-map.store
+```
+
+**Health Check:**
+```
+GET https://api.rooz-map.store/health
+```
+
+**OpenAPI Specification:**
+```
+GET https://api.rooz-map.store/openapi.json
+```
+
+**Swagger Interactive Docs:**
+```
+GET https://api.rooz-map.store/docs
+```
+
+**Main Endpoint:**
+```
+POST https://api.rooz-map.store/v1/product-description/generate
+```
 
 ---
 
@@ -170,7 +200,7 @@ docker compose down
 ### Step 1 — Publish your API on RapidAPI
 
 1. Go to [rapidapi.com/provider](https://rapidapi.com/provider) and create a new API
-2. Set your Coolify URL as the base URL (e.g., `https://your-app.coolify.domain`)
+2. Set your Coolify URL as the base URL: `https://api.rooz-map.store`
 3. Add the endpoint: `POST /v1/product-description/generate`
 4. In **Settings → Proxy Secret**, copy the `X-RapidAPI-Proxy-Secret` value
 5. Set that value as `RAPIDAPI_PROXY_SECRET` in your Coolify environment variables
@@ -185,6 +215,20 @@ docker compose down
 
 **Flow:** Customer → (X-RapidAPI-Key + X-RapidAPI-Host) → RapidAPI Gateway → (X-RapidAPI-Proxy-Secret) → Your Server
 
+### ⚠️ IMPORTANT — RapidAPI Proxy Secret
+
+**Do not use `test-secret-123` in production.**
+
+After creating the API on RapidAPI:
+1. Copy the `X-RapidAPI-Proxy-Secret` from the RapidAPI dashboard
+2. Set it in Coolify as an environment variable:
+   ```
+   RAPIDAPI_PROXY_SECRET=<your_actual_rapidapi_proxy_secret>
+   ```
+
+**Customers must never see or send this header directly.**
+RapidAPI injects it automatically when forwarding requests to your origin server.
+
 ---
 
 ## curl Examples
@@ -192,7 +236,7 @@ docker compose down
 ### Internal server test (direct, using proxy secret)
 
 ```bash
-curl -X POST https://your-app.coolify.domain/v1/product-description/generate \
+curl -X POST https://api.rooz-map.store/v1/product-description/generate \
   -H "Content-Type: application/json" \
   -H "X-RapidAPI-Proxy-Secret: YOUR_PROXY_SECRET" \
   -d '{
