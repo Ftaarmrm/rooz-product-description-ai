@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rooz Product Description AI</title>
-  <meta name="description" content="AI-powered product description API for e-commerce. Generate professional descriptions in 5 languages via RapidAPI." />
+  <meta name="description" content="Rooz Product Description AI is a RapidAPI-ready endpoint for generating product descriptions, bullet points, SEO titles, and meta descriptions in 5 languages." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -432,6 +432,34 @@
     }
     .price-sep { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
 
+
+    /* ── USE CASES / NOTICE ── */
+    .usecase-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      list-style: none;
+    }
+    @media (max-width: 700px) { .usecase-list { grid-template-columns: 1fr; } }
+    .usecase-list li {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .notice {
+      background: rgba(0, 212, 255, 0.06);
+      border: 1px solid rgba(0, 212, 255, 0.22);
+      border-radius: 12px;
+      padding: 1.25rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 1.5rem;
+    }
+    .notice strong { color: var(--text); }
+
     /* ── ENDPOINT BADGE ── */
     .endpoint-badge {
       display: inline-flex;
@@ -493,8 +521,8 @@
     <div class="hero-label">AI-Powered · 5 Languages · E-commerce Ready</div>
     <h1>Product Description<br><span class="highlight">AI API</span></h1>
     <p class="hero-desc">
-      Generate professional product descriptions, bullet points, SEO titles,
-      and meta descriptions for your e-commerce store — in seconds.
+      Generate product descriptions, bullet points, SEO titles,
+      and meta descriptions for e-commerce stores and marketplaces — through a clean RapidAPI endpoint.
     </p>
     <div class="btn-group">
       <a class="btn btn-primary" href="https://rapidapi.com" target="_blank" rel="noopener">
@@ -523,8 +551,8 @@
       <span class="stat-label">Tones</span>
     </div>
     <div class="stat">
-      <span class="stat-num">&lt;2s</span>
-      <span class="stat-label">Avg Response</span>
+      <span class="stat-num">Fast</span>
+      <span class="stat-label">API Response</span>
     </div>
   </div>
 </div>
@@ -600,6 +628,26 @@
         <div class="feature-title">Arabic Styles</div>
         <p class="feature-desc">Formal, Saudi White, or Gulf Commercial — tailored for the region.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- USE CASES -->
+<section>
+  <div class="container">
+    <h2 class="section-title">Built for E-commerce Workflows</h2>
+    <p class="section-sub">Use the API anywhere you need structured product copy at scale.</p>
+    <ul class="usecase-list">
+      <li>Product descriptions for store catalogs</li>
+      <li>SEO titles for product pages</li>
+      <li>Meta descriptions for search snippets</li>
+      <li>Bullet points for marketplace listings</li>
+      <li>Localized copy for multilingual stores</li>
+      <li>Bulk content generation pipelines</li>
+    </ul>
+    <div class="notice">
+      <strong>Content review note:</strong> AI-generated content should be reviewed before publishing, especially for regulated products, medical claims, pricing, warranties, and compliance-sensitive categories.
     </div>
   </div>
 </section>
@@ -689,25 +737,25 @@
         <p style="font-size:0.82rem;color:var(--muted);">Perfect for testing and evaluation.</p>
       </div>
       <div class="price-card">
-        <div class="price-plan">Starter</div>
+        <div class="price-plan">Pro</div>
         <div class="price-amount">$9<span>/mo</span></div>
         <div class="price-req">500 requests/month</div>
         <hr class="price-sep">
-        <p style="font-size:0.82rem;color:var(--muted);">For small stores getting started.</p>
+        <p style="font-size:0.82rem;color:var(--muted);">For small stores and early integrations.</p>
       </div>
       <div class="price-card featured">
-        <div class="price-plan" style="color:var(--accent);">Pro ★</div>
+        <div class="price-plan" style="color:var(--accent);">Ultra ★</div>
         <div class="price-amount">$19<span>/mo</span></div>
-        <div class="price-req">2,000 requests/month</div>
+        <div class="price-req">1,500 requests/month</div>
         <hr class="price-sep">
-        <p style="font-size:0.82rem;color:var(--muted);">Most popular for growing stores.</p>
+        <p style="font-size:0.82rem;color:var(--muted);">For growing stores and agencies.</p>
       </div>
       <div class="price-card">
-        <div class="price-plan">Business</div>
+        <div class="price-plan">Mega</div>
         <div class="price-amount">$49<span>/mo</span></div>
-        <div class="price-req">7,000 requests/month</div>
+        <div class="price-req">5,000 requests/month</div>
         <hr class="price-sep">
-        <p style="font-size:0.82rem;color:var(--muted);">For high-volume e-commerce.</p>
+        <p style="font-size:0.82rem;color:var(--muted);">For higher-volume e-commerce workflows.</p>
       </div>
     </div>
   </div>
